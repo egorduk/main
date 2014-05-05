@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<?php $this->headTitle('User settings'); ?>
+		<?php /* echo $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/user/style.css');*/?>
+  		<?php $this->headScript()->appendFile($this->baseUrl . '/js/jquery.js');?>
+		<?php $this->headScript()->appendFile($this->baseUrl . '/js/user/settings.js');?>
+		<?php /*$this->headScript()->appendFile($this->baseUrl . '/js/typeahead.min.js');*/?>
+	</head>
+	<body>	
+		<div id="content">
+			<?php echo $this->formSettings; ?><br>
+			<?php echo $this->message; ?>
+		</div>
+		<div id="link_forget_pass">
+            <p><a href="<?php echo $this->url(array(), 'logout'); ?>">Выйти</a></p>
+		</div>
+		<div>
+			<script type="text/javascript">
+				 $(document).ready(function(){
+					 
+					$("#payment_name").change(function(){	
+						$("#payment_num").val('');
+						var data = $("#payment_name").val();
+						if (data > 0)
+						{
+							$.ajax({
+							url: './populate-payment-num/user/',
+							type: 'POST',
+							data: {param : data},
+							dataType: "json",
+							success: function(data)
+							{
+								if (data.param != null)
+									$("#payment_num").val(data.param)
+								else
+									$("#payment_num").val("");
+							}
+							});
+						}
+						else
+							$("#payment_num").val("");	
+					});
+
+					/*$('#country').typeahead({
+						name: 'Страна',
+						local: [ "Россия", "Беларусь", "Украина", "Казахстан", "Польша", "Румыния", "Болгария" ]
+					});*/
+					
+					
+				 });
+			</script>
+		</div>
+	</body>
+</html>
+
+

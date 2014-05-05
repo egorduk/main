@@ -1,0 +1,217 @@
+<?php $this->headTitle('Author info'); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/custom-theme1/jquery-ui-1.10.3.custom.css');?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/ui.jqgrid.css');?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/info_style.css');?>
+
+<?php $this->headScript()->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');?>
+<?php $this->headScript()->appendFile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/i18n/grid.locale-ru.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/jquery.jqGrid.min.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/jquery.fmatter.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/highcharts/highcharts.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/highcharts/dark-blue.js');?>
+
+<div id="containerAboutAuthor">
+  <table>
+  <tr>
+    <td>Ник: <?php echo $this->nickname; ?></td>
+    <td>Аватар: <img src="<?php echo $this->avatar; ?>" height="75" alt="Аватар"></td>
+    <td>Страна: <img src="<?php echo $this->country; ?>" height="75" alt="Страна"></td>
+    <td>Дней в системе: <?php echo $this->dayInSystem; ?></td>
+    <td>Кто: <?php echo $this->role; ?></td>
+    <td>Ранг: <?php echo $this->rank; ?></td>
+  </tr>
+  <tr>
+    <td>Специализация:</td>
+    	<?php 
+    		$count = count($this->specialties);
+    		for ($i = 0;$i < $count;$i++)
+			{
+				echo "<td>".$this->specialties[$i]->name."</td>";
+			} 
+		?>   
+  </tr>
+  </table>
+</div>
+<!-- Всего выполнено заказов: <?php echo $this->countCompletedOrders; ?><br>
+Всего не выполнено заказов: <?php echo $this->countUnCompletedOrders; ?><br>
+Всего выполнено дипломов: <?php echo $this->countCompletedDiploms; ?><br>
+Всего выполнено курсовых: <?php echo $this->countCompletedCourses; ?><br>
+Всего выполнено контрольных: <?php echo $this->countCompletedControls; ?><br>
+Всего выполнено иное: <?php echo $this->countCompletedOthers; ?><br> -->
+
+<?php 
+	//if ($this->mode)
+		//echo $this->render('author/jqgridInfo.phtml'); 
+?>
+  
+<div id="containerCompletedOrders">
+	<table id="listCompletedOrders"></table>
+    <div id="pagerCompletedOrders"></div>
+</div>
+
+<div id="containerGuaranteedOrders">
+  	<table id="listGuaranteedOrders"></table>
+    <div id="pagerGuaranteedOrders"></div>
+</div>
+
+<div id="containerSelectAuthor">
+  	<table id="listSelectAuthor"></table>
+    <div id="pagerSelectAuthor"></div>
+</div>
+
+<div id="containerImplementedOrders">
+  	<table id="listImplementedOrders"></table>
+    <div id="pagerImplementedOrders"></div>
+</div>    
+  
+<div id="containerDiagramTotalOrders">
+</div>
+  
+ <script type="text/javascript">
+	$(document).ready(function(){
+		$(function () {
+	    	
+			Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+			    return {
+			        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+			        stops: [
+			            [0, color],
+			            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')]
+			        ]
+			    };
+			});
+			
+	        $('#containerDiagramTotalOrders').highcharts({
+	            chart: {
+	                plotBackgroundColor: null,
+	                plotBorderWidth: null,
+	                plotShadow: false,
+	                type: 'pie'
+	            },
+	            title: {
+	                text: 'Статистика по выполненным заказам за все время'
+	            },
+	            credits: {
+		            enabled: false
+	            },
+	            tooltip: {
+	        	    pointFormat: 'Выполнено: <b>{point.percentage:.0f}%</b>'
+	            },
+	            plotOptions: {
+	                pie: {
+	                    allowPointSelect: true,
+	                    cursor: 'pointer',
+	                    dataLabels: {
+	                        enabled: false
+	                    },
+	                    showInLegend: true, 
+	                }
+	            },
+	            series: [{
+	                data: [{
+		            	name: 'Дипломы',
+		            	y: <?=$this->countCompletedDiploms;?>
+	                },{
+		                name: 'Курсовые',
+		                y: <?=$this->countCompletedCourses;?>
+	                },{
+	                	name: 'Контрольные',
+		                y: <?=$this->countCompletedControls;?>,
+				        color: '#BA55D3'
+	                },{
+	                	name: 'Иное',
+	                	y: <?=$this->countCompletedOthers;?>,
+	                	color: '#4169E1'
+	                },]
+	            },]
+	        });
+	    });
+			  	
+	});  
+</script>
+  
+<br></br>
+<div id="containerGraphicTotalOrders">
+</div>
+  
+  <script type="text/javascript">
+		  $(document).ready(function(){
+			 
+			  var options = {
+				        chart: {
+				            renderTo: 'containerGraphicTotalOrders',
+				            type: 'line'
+				        },
+				        title: {
+			                text: 'Статистика по заказам за каждый месяц',
+			                x: -20
+			            },
+			            subtitle: {
+			                text: '2013 год',
+			                x: -20
+			            },
+			            xAxis: {
+			                categories: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь','Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+			            },
+			            yAxis: {
+			            	min: 0,
+			            	max: null,
+			                title: {
+			                    text: 'Количество заказов'
+			                },
+			                plotLines: [{
+			                    value: 0,
+			                    width: 2,
+			                    color: '#808080'
+			                }]
+			            },
+			            credits: {
+				            enabled: false
+			            },
+			            tooltip: {
+			                valueSuffix: ' шт.',
+			                shared: true,
+			                crosshairs: true					             
+			            },
+			            plotOptions: {
+			                series: {
+			                    cursor: 'pointer'
+			                }
+			            },            
+			            legend: {
+			                layout: 'vertical',
+			                align: 'right',
+			                verticalAlign: 'middle',
+			                borderWidth: 0
+			            },
+				        series: [{
+					    	marker: {
+							    fillColor: '#32CD32',
+							    lineWidth: 4,
+							    radius: 3,
+							    lineColor: null
+						    },
+						    color: '#32CD32',
+		                	name: 'Выполнено',
+		            	},
+		            	{
+		            		marker: {
+							    fillColor: '#FF0000',
+							    lineWidth: 4,
+							    radius: 3,
+							    lineColor: null
+						    },
+		            		color: '#FF0000',
+		                	name: 'Невыполнено',
+		            	},]
+				    };
+
+				    $.post('./info/author/',{rows:1,page:0,sidx:0,sord:0,id:<?=$this->authorId;?>},function(data){
+				        options.series[0].data = data.completed;
+				        options.series[1].data = data.uncompleted;
+				    	var chart = new Highcharts.Chart(options); 
+				    },'json');				  
+		  });
+  </script>
+  

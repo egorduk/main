@@ -1,0 +1,156 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+	    $("#listCompletedOrders").jqGrid({
+	         url:'./info/author/',
+	         datatype: 'json',
+	         mtype: 'POST',
+			 autowidth: true,
+			 recordtext: "Заказов выполнено: {2}",
+	         colNames:['№ заказа','Дата завершения','Тип работы','Тема работы','Цена','Заказчик','','','Отзыв заказчика','Доволен','',''],
+	         colModel :[
+	             {name:'num',index:'num',width:100,align:'center',resizable:false,editable:false},
+	             {name:'datetime_id',index:'datetime_id',width:160,align:'center',resizable:false,editable:false},
+	             {name:'type_id',index:'type_id',width:150,align:'center',resizable:false,editable:false,sortable:true},
+	             {name:'name_theme',index:'name_theme',width:300,align:'center',resizable:false,editable:false,sortable:true}, 
+	             {name:'author_price',index:'author_price',width:80,align:'center',resizable:false,editable:false,sortable:true},
+	             {name:'client_id',index:'client_id',width:150,align:'center',resizable:false,editable:false,formatter:showImg}, 
+	             {name:'avatar',index:'avatar',hidden:true},
+	             {name:'clientId',index:'clientId',hidden:true}, 
+	             {name:'comment',index:'comment',width:200,align:'center',resizable:false,editable:false,sortable:true},  
+	             {name:'grade',index:'grade',width:200,align:'center',resizable:false,editable:false,sortable:true,formatter:showRaiting},
+	             {name:'gradeCount',index:'gradeCount',hidden:true},
+	             {name:'date_expire',index:'date_expire',hidden:true},
+	             ],
+	         pager: $('#pagerCompletedOrders'),
+	         rowNum: 5000,
+	         sortname: 'date_expire',
+	         sortorder: 'asc',
+	         viewrecords: true,
+	         hidegrid: false,
+	         pgbuttons: false,
+	         pgtext: null,
+	         caption: 'Выполненные заказы',
+	         height: '350',             		            
+	     }).navGrid('#pagerCompletedOrders',{view:false,del:false,add:false,edit:false,refresh:false,search:false}, 
+				{},{},{},{},{} 
+			);
+	
+	    function showRaiting(cellvalue,options,rowObject)
+	    {
+			if (rowObject[10] == 1)
+	     		return '<span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span>';
+	     	else if (rowObject[10] == 2)
+	     		return '<span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span>';
+	     	else if (rowObject[10] == 3)
+	     		return '<span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span>';
+	     	else if (rowObject[10] == 4)
+	     		return '<span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span>';
+			else if (rowObject[10] == 5)
+	     		return '<span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span><span class="round"><img src="' + rowObject[9] + '" width="25" alt=""/></span class="round"><span><img src="' + rowObject[9] + '" width="25" alt=""/></span>';
+		};
+
+		$("#listGuaranteedOrders").jqGrid({
+            url:'./info/author/',
+            datatype: 'json',
+            mtype: 'POST',
+			autowidth: true,
+			recordtext: "Заказов на гарантии: {2}",
+            colNames:['№ заказа','Гарантия до','Тип работы','Тема работы','Цена','Заказчик','','','Пометка'],        
+            colModel :[
+                {name:'num',index:'num',width:100,align:'center',resizable:false,editable:false},
+                {name:'datetime_id',index:'datetime_id',width:190,align:'center',resizable:false,editable:false},
+                {name:'type_id',index:'type_id',width:150,align:'center',resizable:false,editable:false},
+                {name:'name_theme',index:'name_theme',width:300,align:'center',resizable:false,editable:false}, 
+                {name:'price',index:'price',width:100,align:'center',resizable:false,editable:false}, 
+                {name:'client_id',index:'client_id',width:150,align:'center',resizable:false,editable:false,formatter:showImg}, 
+                {name:'avatar',index:'avatar',hidden:true},
+                {name:'clientId',index:'clientId',hidden:true},
+                {name:'note',index:'note',width:100,align:'center',resizable:false,editable:false},             
+	        ],
+            pager: $('#pagerGuaranteedOrders'),
+            rowNum: 100,
+            sortname: 'num',
+            sortorder: 'asc',
+            viewrecords: true,
+            hidegrid: false,
+            pgbuttons: false,
+            pgtext: null,
+            caption: 'Заказы на гарантии',
+            height: '250',             		            
+        }).navGrid('#pagerGuaranteedOrders',{view:false,del:false,add:false,edit:false,refresh:false,search:false}, 
+			{},{},{},{},{} 
+		);
+
+		$("#listSelectAuthor").jqGrid({
+            url:'./info/author/',
+            datatype: 'json',
+            autowidth: true,
+            mtype: 'POST',
+            recordtext: "Вы выбраны для выполнения заказов: {2}",
+            colNames:['№ заказа','Подтверждение до','Тип работы','Тема работы','Заказчик','Цена','','',''],        
+            colModel :[
+                {name:'num',index:'num',width:100,align:'center',resizable:false,editable:false},
+                {name:'datetime_id',index:'datetime_id',width:250,align:'center',resizable:false,editable:false},
+                {name:'type_id',index:'type_id',width:150,align:'center',resizable:false,editable:false},
+                {name:'name_theme',index:'name_theme',width:300,align:'center',resizable:false,editable:false}, 
+                {name:'client_id',index:'client_id',width:100,align:'center',resizable:false,editable:false,formatter:showImg},
+                {name:'price',index:'price',width:100,align:'center',resizable:false,editable:false}, 
+                {name:'avatar',index:'avatar',hidden:true}, 
+                {name:'clientId',index:'clientId',hidden:true}, 
+                {name:'date_appoint',index:'date_appoint',hidden:true}, 
+            ],
+            pager: $('#pagerSelectAuthor'),
+            rowNum: 50,
+            sortname: 'date_appoint',
+            sortorder: 'asc',
+            viewrecords: true,
+            hidegrid: false,
+            pgbuttons: false,
+            pgtext: null,
+            caption: 'Подтверждение взятия заказов',
+            height: '250',          		            
+        }).navGrid('#pagerSelectAuthor',{view:false,del:false,add:false,edit:false,refresh:false,search:false}, 
+			{},{},{},{},{} 
+		);
+
+		$("#listImplementedOrders").jqGrid({
+            url:'./info/author/',
+            datatype: 'json',
+            autowidth: true,
+            mtype: 'POST',
+            recordtext: "Вы выполняете заказов: {2}",
+            colNames:['№ заказа','Выполнение до','Тип работы','Тема работы','Заказчик','Цена','','',''],        
+            colModel :[
+                {name:'num',index:'num',width:70,align:'center',resizable:false,editable:false},
+                {name:'datetime_id',index:'datetime_id',width:120,align:'center',resizable:false,editable:false},
+                {name:'type_id',index:'type_id',width:90,align:'center',resizable:false,editable:false},
+                {name:'name_theme',index:'name_theme',width:300,align:'center',resizable:false,editable:false}, 
+                {name:'client_id',index:'client_id',width:100,align:'center',resizable:false,editable:false,formatter:showImg},
+                {name:'price',index:'price',width:100,align:'center',resizable:false,editable:false}, 
+                {name:'avatar',index:'avatar',hidden:true}, 
+                {name:'clientId',index:'clientId',hidden:true}, 
+                {name:'date_expire',index:'date_expire',hidden:true}, 
+            ],
+            pager: $('#pagerImplementedOrders'),
+            rowNum: 90,
+            sortname: 'date_expire',
+            sortorder: 'asc',
+            viewrecords: true,
+            hidegrid: false,
+            pgbuttons: false,
+            pgtext: null,
+            caption: 'Выполнение заказов',
+            height: '250',          		            
+        }).navGrid('#pagerImplementedOrders',{view:false,del:false,add:false,edit:false,refresh:false,search:false}, 
+			{},{},{},{},{} 
+		);
+
+		function showImg(cellvalue, options, rowObject) 
+		{
+			return '<div><img src="' + rowObject[6] + '" width="50" alt="Аватар заказчика" border="0"/></div><div><a href = "http://www.test.test/client/info/' + rowObject[7] + '">' + cellvalue + '</a></div>'; 
+		};
+			
+		
+	    }); 	 			      
+</script>

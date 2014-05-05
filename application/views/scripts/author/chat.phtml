@@ -1,0 +1,21 @@
+
+<?php $this->headTitle('Order page'); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/chat/jScrollPane.css');?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/chat/page.css');?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/chat/chat.css');?>
+<?php $this->headScript()->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/chat/jquery.mousewheel.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/chat/jScrollPane.min.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/chat/chat.js');?>
+	<div id="chatContainer">
+	    <div id="chatTopBar" class="rounded"></div>
+	    <div id="chatLineHolder"></div>  
+	    <div id="chatUsers" class="rounded"></div>
+	    <div id="chatBottomBar" class="rounded">
+	    	<div class="tip"></div>   
+	        <form id="submitForm" method="post" action="">
+	            <input id="chatText" name="chatText" class="rounded" maxlength="255" />
+	            <input type="submit" class="blueButton" value="Отправить" />
+	        </form>   
+	    </div>
+	</div>

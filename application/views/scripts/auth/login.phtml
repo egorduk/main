@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<?php $this->headTitle('Login'); ?>
+        <?php $this->headMeta()->appendHttpEquiv('Cache-Control', 'public') ?>
+		<?php $this->headScript()->appendFile('//ulogin.ru/js/ulogin.js');?>
+	</head>
+	<body>	
+		<div id="formLogin">
+			<?php echo $this->form ?>
+			<?php echo $this->msg ?>
+		</div>
+		<div id="openID">
+			<div id="uLogin" data-ulogin="display=panel;fields=first_name,email,photo,photo_big,city,country;
+				providers=vkontakte,odnoklassniki,twitter,facebook,google;hidden=mailru,yandex;
+				redirect_uri=<?=urlencode('http://'.$_SERVER['SERVER_NAME'].$this->baseUrl().'/login')?>">
+			</div>
+		</div>
+		<div id="linkForgetPass">
+            <p><a href="<?php echo $this->url(array(), 'auth_forget_pass'); ?>">Забыли пароль?</a></p>
+		</div>
+	</body>
+</html>

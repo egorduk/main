@@ -1,0 +1,20 @@
+<?php echo $this->doctype(Zend_View_Helper_Doctype::XHTML1_TRANSITIONAL); ?>
+<html>
+ <head>
+  <?php echo $this->headTitle('Index page'); ?>
+  <?php echo $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8'); ?>
+  <?php echo $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/style.css'); ?>
+  <?php echo $this->headScript(); ?>
+</head>
+<body>
+    <div id="main">
+        <div id="content">
+			<p><a href="<?php echo $this->url(array(), 'auth_login'); ?>">Клиент вход</a><br>
+			<p><a href="<?php echo $this->url(array(), 'auth_client_reg'); ?>">Клиент регистрация</a><br>
+			<p><a href="<?php echo $this->url(array(), 'auth_login'); ?>">Автор вход</a><br>
+			<p><a href="<?php echo $this->url(array(), 'auth_author_reg'); ?>">Автор регистрация</a><br>
+        </div>
+    </div>
+</body>
+</html>
+

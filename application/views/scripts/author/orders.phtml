@@ -1,0 +1,80 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/custom-theme1/jquery-ui-1.10.3.custom.css');?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/ui.jqgrid.css');?>
+
+<?php $this->headScript()->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/i18n/grid.locale-ru.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/jquery.jqGrid.min.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/jquery.fmatter.js');?>
+
+
+<table id="listOrders"></table> 
+<div id="pagerOrders"></div>
+		<script type="text/javascript">
+		    $(document).ready(function(){		        
+		        $("#listOrders").jqGrid({
+		            url:'./orders/author/',
+		            datatype: 'json',
+		            mtype: 'POST',
+					autowidth: true,
+					recordtext:"Просмотр заказов {0} - {1}",
+		            colNames:['','№ заказа','Дата создания','Специальность','Тема работы','Тип работы','Выполнение до','Моя цена'],
+		            colModel :[
+		                {name:'id',index:'id',search:false,hidden:true},
+		                {name:'num',index:'num',width:100,align:'center',resizable:false,editable:false,searchoptions:{sopt:['eq','ne','bw','cn']},/*,formatter:'showlink',formatoptions:{baseLinkUrl:'someurl.php', addParam: '&action=edit'}*/},
+		                {name:'date_create',index:'date_create',width:140,align:'center',resizable:false,editable:false,search:false},
+		                {name:'specialty_id',index:'specialty_id',width:170,align:'center',resizable:false, editable:false, searchoptions:{sopt:['eq','bw','cn']}},
+		                {name:'name_theme',index:'name_theme',width:600,align:'center',resizable:false,editable:false, searchoptions:{sopt:['eq','bw','cn']}},
+		                {name:'type_id',index:'type_id',width:150,align:'center',resizable:false,editable:false, searchoptions:{sopt:['eq','ne','bw','cn']}},
+		                {name:'date_expire',index:'date_expire',width:150,align:'center',resizable:false,editable:false,search:false},
+		                {name:'price',index:'price',width:130,align:'center',resizable:false,editable:false, searchoptions:{sopt:['eq','ne','bw','cn']}/*,formatter:showButton*/},
+		                ],
+		            pager: $('#pagerOrders'),
+		            toolbar: [true,'top'],
+		            rowNum:10,
+		            rowList:[5,10,20,30],
+		            sortname: 'date_create',
+		            sortorder: 'desc',
+		            viewrecords: true,
+		            hidegrid: false,
+		            caption: 'Таблица заказов',
+		            height: '450',          
+		            /*loadComplete: function(data) 
+		            {
+		                var NoOfCellAdd = Number($("#list").parent().parent().css('height').split('px')[0]) / 5;
+
+		                for (var i = data.records; i <= NoOfCellAdd; i++) 
+			            {
+		                    $("#list").addRowData(i + 1, {});
+		                }	                
+		            }, */    		            
+		            onSelectRow: function(id) 
+		            {
+		            	//if ($('.buttonSetPrice').data('clicked'))
+		            	//{
+			            	//alert("id="+id);
+			            	//$('.buttonSetPrice').data('clicked', false);
+		            	//}
+		            	//else
+			            location.href = 'order/' + id;
+		            },
+		        }).navGrid('#pagerOrders',{view:false,search:true,del:false,add:false,edit:false,refresh:true}, 
+					{},{},{},{closeOnEscape:true, multipleSearch:false, closeAfterSearch:true},{}
+				);
+
+				/*setClicked = function()
+				{
+					$('.buttonSetPrice').data('clicked', true);			
+				};
+		
+				function showButton(cellvalue,options,rowObject)
+				{
+					return "<input type='button' class='buttonSetPrice' value='Установить' onclick='setClicked();' name='' />";
+		        };*/
+  
+		        $("#t_listOrders").height(55); 
+		        $("#t_listOrders").append('<div id="">Для поиска нажмите на </div><div id="">Для сброса результата поиска нажмите на </div><div id="">Для обновления таблицы нажмите на </div>');
+    	
+		    }); 	    
+    </script>
+    
+    

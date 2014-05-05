@@ -1,0 +1,29 @@
+<?php //$this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/custom-theme1/jquery-ui-1.10.3.custom.css');?>
+<?php //$this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/ui.jqgrid.css');?>
+
+<?php $this->headScript()->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/author/script_order.js');?>
+
+	<div id="blockInfoAboutOrder">
+		<span>Информация о заказе</span><br>
+ 		<span>Номер заказа:</span><?php echo $this->num; ?><br>
+ 		<span>Тема работы:</span><?php echo $this->nameTheme; ?><br>
+ 		<span>Задание:</span><?php echo $this->task; ?><br>
+ 		<span>Объем работы:</span><?php echo $this->capacity; ?><br>
+ 		<span>Дополнительная информация:</span><?php echo $this->additionInfo; ?><br>
+ 		<span>Специальность:</span><?php echo $this->specialty; ?><br>
+ 		<span>Тип работы:</span><?php echo $this->type; ?><br>
+ 		<span>Статус заказа:</span><?php echo $this->status; ?><br>
+ 		<span>Клиент ник:</span><?php echo $this->clientNick; ?><br>
+ 		<span>Клиент аватар:</span><?php echo $this->clientAvatar; ?><br>
+ 		<span>Клиент линк:</span><?php echo $this->clientLink; ?><br>
+ 		<span>Дата создания заказа:</span><?php echo $this->dateCreate; ?><br>
+ 		<span>Выполнение заказа до:</span><?php echo $this->dateExpire; ?>
+	</div>
+	<div id="blockAuthorFormBid">
+		<?php echo $this->formBid; ?>
+ 	</div>
+ 	<div id="blockAuthorPlaceBid">
+ 	</div>
+
+    

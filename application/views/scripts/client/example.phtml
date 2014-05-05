@@ -1,0 +1,54 @@
+<html>
+	<head>	
+		<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/custom-theme1/jquery-ui-1.10.3.custom.css');?>
+		<?php $this->headLink()->appendStylesheet($this->baseUrl . 'design/css/jqgrid/ui.jqgrid.css');?>
+		<?php $this->headScript()->appendFile($this->baseUrl . '/js/jquery-1.3.2.min.js'); ?>
+		<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/i18n/grid.locale-ru.js');?>
+		<?php $this->headScript()->appendFile($this->baseUrl . '/js/jqgrid/jquery.jqGrid.min.js');?>
+	</head>
+	<body>
+		<table id="list"></table> 
+		<div id="pager"></div>
+		<script type="text/javascript">
+		    jQuery(document).ready(function(){
+		        var lastSel;
+		        jQuery("#list").jqGrid({
+		            url:'./example/client/',
+		            datatype: 'json',
+		            mtype: 'POST',
+					autowidth: true,
+		            colNames:['Номер заказа', 'Фамилия', 'Имя', 'Отчество'],
+		            colModel :[
+		                {name:'id', index:'id', width:50, align:'right', search:false}
+		                ,{name:'surname', index:'surname', width:150, align:'right', editable:false, searchoptions:{sopt:['eq','ne','bw','cn']}}
+		                ,{name:'fname', index:'fname', width:150, align:'right', editable:false, searchoptions:{sopt:['eq','ne','bw','cn']}}
+		                ,{name:'lname', index:'lname', width:150, align:'right', editable:false, searchoptions:{sopt:['eq','ne','bw','cn']}}
+		                ],
+		            pager: jQuery('#pager'),
+		            rowNum:10,
+		            rowList:[10],
+		            sortname: 'id',
+		            sortorder: "asc",
+		            viewrecords: true,
+		            caption: 'Таблица заказов',
+		            ondblClickRow: function(id) {
+		                if (id && id != lastSel) {
+		                    jQuery("#list").restoreRow(lastSel);
+		                    jQuery("#list").editRow(id, true);
+		                    lastSel = id;
+		                }
+		            },
+		            //editurl: 'saverow.php'
+		        }).navGrid('#pager',{view:false, del:false, add:false, edit:false}, 
+					{}, //  default settings for edit
+					{}, //  default settings for add
+					{},  // delete instead that del:false we need this
+					{closeOnEscape:true, multipleSearch:true, closeAfterSearch:true}, // search options
+					{} /* view parameters*/
+				); 
+		    }); 
+    </script>
+	</body>
+</html>
+
+

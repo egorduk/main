@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<?php $this->headTitle('Index client page'); ?>
+	</head>
+	<body>	
+		<div id="content">
+			<?php echo $this->text ?>
+			<br>Вы вошли как : <?php echo $this->nickname ?>
+			<br>Роль : <?php echo $this->role ?>
+			<br>Email : <?php echo $this->email ?>
+		</div>
+		<div id="link_forget_pass">
+            <p><a href="<?php echo $this->url(array(), 'logout'); ?>">Выйти</a></p>
+		</div>
+	</body>
+</html>
+
+

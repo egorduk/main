@@ -1,0 +1,16 @@
+#containerDiagramTotalOrders{
+  display: block;
+ /*width: 100%;*/
+  
+}
+
+#containerGraphicTotalOrders{
+  display: block;
+  /*width: 100%;*/
+  
+}
+
+span.round{
+  display:inline-block;
+  width : 27px;
+}
